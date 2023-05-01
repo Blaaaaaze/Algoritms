@@ -1,7 +1,21 @@
-def deleting(indexes):
+def deleting(indexes, currsum):
+    flag = 1
     for i in range(len(indexes)):
-        v.pop(indexes[i] - i)
-        w.pop(indexes[i] - i)
+        if v[i] == currsum:
+            v.pop(i)
+            w.pop(i)
+            break
+        else:
+            for j in range(len(indexes)):
+                if v[i]+v[j] == currsum:
+                    v.pop(i)
+                    w.pop(i)
+                    v.pop(j-1)
+                    w.pop(j-1)
+                    flag = 0
+                    break
+        if flag == 0:
+            break
 
 
 v = []
@@ -40,16 +54,16 @@ while (k < count) and (len(v) > 0):
                 m[i][j] = max(m[i - 1][j], m[i - 1][j - w[i]] + v[i])
                 if (m[i][j] == m[i - 1][j - w[i]] + v[i]):
                     indexes.add(i)
+
     indexes = list(indexes)
     indexes.sort()
+    summnumb = m[len(m) - 1][len(m[0]) - 1]
     summ += m[len(m) - 1][len(m[0]) - 1]
-    deleting(indexes)
+    deleting(indexes, summnumb)
     k+=1
 
 print(summ)
-
-
-
+#5000+2500+1000+1500+1250
 
 
 
