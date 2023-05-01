@@ -1,0 +1,56 @@
+def deleting(indexes):
+    for i in range(len(indexes)):
+        v.pop(indexes[i] - i)
+        w.pop(indexes[i] - i)
+
+
+v = []
+w = []
+
+W = int(input("Ввеите грузоподъемность: "))
+count = int(input("Введите количество заходов: "))
+
+while True:
+    s1 = input("Введите стоимость экспоната: ")
+    s2 = input("Введите его вес: ")
+    if (s1 != '') and (s2 != ''):
+        v.append(int(s1))
+        w.append(int(s2))
+    else:
+        break
+
+summ = 0
+
+k = 0
+while (k < count) and (len(v) > 0):
+    m = []
+    for i in range(len(v)):
+        m.append([])
+
+    for i in range(len(v)):
+        for j in range(W + 1):
+            m[i].append(0)
+
+    indexes = set()
+    for i in range(len(v)):
+        for j in range(W + 1):
+            if (w[i] > j):
+                m[i][j] = m[i - 1][j]
+            else:
+                m[i][j] = max(m[i - 1][j], m[i - 1][j - w[i]] + v[i])
+                if (m[i][j] == m[i - 1][j - w[i]] + v[i]):
+                    indexes.add(i)
+    indexes = list(indexes)
+    indexes.sort()
+    summ += m[len(m) - 1][len(m[0]) - 1]
+    deleting(indexes)
+    k+=1
+
+print(summ)
+
+
+
+
+
+
+
